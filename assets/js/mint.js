@@ -7,8 +7,6 @@ let torus;
 let web3;
 let contract;
 
-let preSaleLive = false;
-let publicSaleLive = false;
 let costPerNFT = 24081991000000000;
 let topupPerNFT = 30000000000000000;
 let maxMintCount = 25;
@@ -114,7 +112,11 @@ const checkBalance = async () => {
 }
 
 const updateMintCountText = async () => {
+    const nftText = (mintCount > 1) ? "NFTs" : "NFT";
+    const cost = (mintCount * costPerNFT) / 1000000000000000000;
     $("#mint-count").text(mintCount);
+    $("#nfts-count").text(`${mintCount} ${nftText}`);
+    $("#nfts-cost").text(`${ cost.toPrecision(8) }`);
 }
 
 const setError = async (message) => {
@@ -133,7 +135,7 @@ const disableState = async () => {
 const enableState = async () => {
     $("#mint-count-minus").prop( "disabled", false );
     $("#mint-count-plus").prop( "disabled", false );
-    $("#mint-button").text("Donate & Get NFT").prop( "disabled", false );   
+    $("#mint-button").text("Donate").prop( "disabled", false );   
 }
 
 // Add listeners for button
