@@ -19,7 +19,7 @@ a {
 }
 
 a:hover {
-  color: #ea6981;
+  color: #ffd500;
   text-decoration: none;
 }
 
@@ -363,8 +363,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 #hero .btn-get-started:hover {
-  background: #005bbb;
-  border: 2px solid #005bbb;
+  background: #ffd500;
+  color: #222;
+  border: 2px solid #ffd500;
 }
 @media (min-width: 1024px) {
   #hero {
@@ -518,7 +519,7 @@ section {
   z-index: -1;
 }
 .services .icon-box:hover::before {
-  background: linear-gradient(0deg, #ffd500 50%, #005bbb 0%);;
+  background: linear-gradient(0deg, #ffd500 50%, #005bbb 0%);
   top: 0;
   border-radius: 0px;
 }
@@ -533,22 +534,25 @@ section {
 }
 .services .title {
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
   font-size: 18px;
 }
 .services .title a {
   color: #111;
 }
 .services .description {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 28px;
   margin-bottom: 0;
 }
-.services .icon-box:hover .title a, .services .icon-box:hover .description {
-  color: #000;
+.services .icon-box:hover .description {
+  color: #005bbb;
+}
+.services .icon-box:hover .title a {
+  color: #ffd500;
 }
 .services .icon-box:hover .icon i {
-  color: #000;
+  color: #ffd500;
 }
 
 /*--------------------------------------------------------------
