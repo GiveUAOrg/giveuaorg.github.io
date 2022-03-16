@@ -27,6 +27,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Nunito", sans-serif;
 }
 
+.wallet-button {
+  width: 15em;
+}
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -656,6 +660,7 @@ section {
 }
 .portfolio .portfolio-item img {
   position: relative;
+  width: 100% !important;
   top: 0;
   transition: all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
