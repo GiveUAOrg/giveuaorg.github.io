@@ -1721,3 +1721,11 @@ section {
 #nfts-cost {
   color: #ffd500;
 }
+.faq-body {
+  padding-left: 40px;
+}
+.faq-body li {
+  border-bottom: 0px !important;
+  margin-bottom: 0px !important;
+  padding: 6px 0px !important
+}
