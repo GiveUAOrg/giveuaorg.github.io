@@ -6,6 +6,28 @@
 */
 (function() {
   "use strict";
+  let currentSection = "";
+
+  /**
+   * Send a telemetry event about a view
+   */
+  const sendScreenView = (name) => {
+    gtag('event', 'screen_view', {
+        'app_name': 'Meta Moodies Club Webpage',
+        'screen_name' : name
+    });
+  }
+
+  /**
+   * Send telemetry when section changes
+   */
+  const sectionChangeTelemetry = (detectedSection) => {
+      if (currentSection != detectedSection) {
+          currentSection = detectedSection;
+          console.log(`Section changed to: ${currentSection}`);
+          sendScreenView(currentSection);
+      }
+  }
 
   /**
    * Easy selector helper function
@@ -51,6 +73,7 @@
       let section = select(navbarlink.hash)
       if (!section) return
       if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+        sectionChangeTelemetry(section.id);
         navbarlink.classList.add('active')
       } else {
         navbarlink.classList.remove('active')
