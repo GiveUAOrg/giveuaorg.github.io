@@ -1,4 +1,4 @@
-const contractAddress = "0x3B9c0540235Ca2018AB8012EE2be6E4B57198f2c";
+const contractAddress = "0xf6faBad428b220463317cA25F31372f350096Bfd";
 const networkId = 4; // Rinkeby testnet
 const networkName = "rinkeby";
 let mintCount = 1;
@@ -78,7 +78,7 @@ const getWeb3 = () => {
 const getContract = async () => {
     return new Promise(async (resolve, reject) => {
         try {
-            const data = await $.getJSON("./assets/contract/GiveUAOrg.json");
+            const data = await $.getJSON("./assets/contract/GiveUkraineOrg.json");
             contract = new web3.eth.Contract(
                 data.abi,
                 contractAddress
@@ -135,7 +135,7 @@ const disableState = async () => {
 const enableState = async () => {
     $("#mint-count-minus").prop( "disabled", false );
     $("#mint-count-plus").prop( "disabled", false );
-    $("#mint-button").text("Donate").prop( "disabled", false );   
+    $("#mint-button").text("Donate").prop( "disabled", false );
 }
 
 // Add listeners for button
@@ -213,22 +213,31 @@ const addListeners = async () => {
     $("#mint-button").on("click", async (e) => {
         e.preventDefault();
         sendEventValue("Mint", mintCount);
-        mintMoodies();
+        donateAndMint();
     });
 }
 
-const mintMoodies = async () => {
+const fetchSupply = async () => {
+    remainingSupply = await contract.methods.remainingSupply().call();
+    $("#nfts-left").text(remainingSupply);
+};
+
+const donateAndMint = async () => {
     disableState();
     await checkBalance() 
+        .then(() => fetchSupply())
         .then(() => getAccounts())
         .then(async (accounts) => {
             let mintStatus;
             const totalCost = costPerNFT * mintCount;
 
-            sendEvent("Public sale mint");
-            mintStatus = contract.methods.mintPublicSale(mintCount).send({ 
+            // Safe max for 1 NFT (mint + donation) + cost per additional NFT
+            const gasCost = 110000 + 30000 * (mintCount - 1);
+
+            sendEvent("Donate and Mint");
+            mintStatus = contract.methods.donateAndMint(mintCount).send({ 
                 from: accounts[0], 
-                gas: 200000,
+                gas: gasCost,
                 value: totalCost
             });
 
@@ -243,7 +252,7 @@ const mintMoodies = async () => {
                 sendException("Mint failed");
             }).finally(() => {
                 enableState();
-            });
+            }).then(() => fetchSupply());
     }).catch((error) => {
         console.log(error);
         setError("Please select the correct network in the Wallet!");
@@ -257,6 +266,7 @@ async function giveUAOrgMinter() {
         .then(() => initTorus())
         .then(() => getWeb3())
         .then(() => getContract())
+        .then(() => fetchSupply())
         .catch((error) => {
             console.log(`Error fetching initial details. ${error}`);
         })
