@@ -1,5 +1,4 @@
 const contractAddress = "0xf6faBad428b220463317cA25F31372f350096Bfd";
-const networkId = 4; // Rinkeby testnet
 const networkName = "rinkeby";
 let mintCount = 1;
 let useTorus = true;
