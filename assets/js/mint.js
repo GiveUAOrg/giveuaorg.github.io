@@ -1,4 +1,4 @@
-const contractAddress = "0x60172e4ed2A68EF0c32A5D56f0b14FEe0C5B5af8";
+const contractAddress = "0x74771Ecdb58F7d5bd00Ef8029C37ccBADc412338";
 const networkName = "rinkeby";
 let mintCount = 1;
 let useTorus = true;
