@@ -110,8 +110,6 @@ const checkBalance = async () => {
     }
     if (balance < mintCount * costPerNFT) {
         $("#mint-button").prop("disabled", true);
-    } else {
-        $("#mint-button").prop("disabled", false);
     }
 }
 
