@@ -108,6 +108,11 @@ const checkBalance = async () => {
         setError(`Looks like your balance (${ (balance / 1000000000000000000).toPrecision(2) } ETH) is low! You should Topup before you can donate!`);
         $("#topup-wallet").show();
     }
+    if (balance < mintCount * costPerNFT) {
+        $("#mint-button").prop("disabled", true);
+    } else {
+        $("#mint-button").prop("disabled", false);
+    }
 }
 
 const updateMintCountText = async () => {
