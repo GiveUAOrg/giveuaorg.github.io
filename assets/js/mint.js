@@ -103,13 +103,25 @@ const getAccounts = async () => {
 
 const checkBalance = async () => {
     const balance = await web3.eth.getBalance((await getAccounts())[0]);
+    let sufficient = true;
     console.log(`Balance is: ${balance}`);
     if (balance < mintCount * topupPerNFT) {
         setError(`Looks like your balance (${ (balance / 1000000000000000000).toPrecision(2) } ETH) is low! You should Topup before you can donate!`);
         $("#topup-wallet").show();
+        sufficient = false;
     }
     if (balance < mintCount * costPerNFT) {
         $("#mint-button").prop("disabled", true);
+    }
+    return sufficient;
+}
+
+const checkBalanceLoop = async () => {
+    if (await checkBalance()) {
+        setError("");
+        $("#mint-button").prop("disabled", false);
+    } else {
+        setTimeout(checkBalanceLoop, 10000);
     }
 }
 
@@ -194,11 +206,17 @@ const addListeners = async () => {
         .then(() => checkBalance());
     });
     $("#topup-wallet").on("click", async (e) => {
-        return torus.initiateTopup("wyre", {
-            fiatValue: mintCount * 100,
-            selectedCryptoCurrency: "ETH",
-            selectedAddress: (await getAccounts())[0],
-        });
+        try {
+            await torus.initiateTopup("wyre", {
+                fiatValue: mintCount * 100,
+                selectedCryptoCurrency: "ETH",
+                selectedAddress: (await getAccounts())[0],
+            });
+        } catch (e) {
+            console.log(`Topup failed ${e}`);
+        } finally {
+            await checkBalanceLoop();
+        }
     });
     $("#mint-count-minus").on("click", async (e) => {
         e.preventDefault();
