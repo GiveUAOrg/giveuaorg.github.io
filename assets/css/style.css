@@ -362,11 +362,17 @@ h1, h2, h3, h4, h5, h6 {
   transition: 0.5s;
   border: 2px solid #fff;
   color: #fff;
+  width: 200px;
 }
 #hero .btn-get-started:hover {
   background: #ffd500;
   color: #222;
   border: 2px solid #ffd500;
+}
+#hero .donate:hover {
+  background: #005bbb;
+  color: #fff;
+  border: 2px solid #005bbb;
 }
 #hero span {
   color: #ffd500;
