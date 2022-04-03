@@ -207,7 +207,7 @@ const addListeners = async () => {
     });
     $("#topup-wallet").on("click", async (e) => {
         try {
-            await torus.initiateTopup("wyre", {
+            await torus.initiateTopup("moonpay", {
                 fiatValue: mintCount * 100,
                 selectedCryptoCurrency: "ETH",
                 selectedAddress: (await getAccounts())[0],
